@@ -31,13 +31,14 @@
 					
 				</div>
 
+				<div>
 				<form class="login100-form validate-form">
 					<span class="login100-form-title">
 						Member Registration
 					</span>
 
                     <div class="wrap-input100 validate-input" data-validate = "Name is required">
-						<input class="input100" type="text" name="name" placeholder="Name">
+						<input class="input100" type="text" name="name" placeholder="Name" id="name">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-user" aria-hidden="true"></i>
@@ -45,7 +46,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" name="email" placeholder="Email">
+						<input class="input100" type="text" name="email" placeholder="Email" id="email">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -53,7 +54,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="pass" placeholder="Password">
+						<input class="input100" type="password" name="pass" placeholder="Password" id="password">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -61,26 +62,29 @@
 					</div>
 
                     <div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="pass" placeholder="Confirm Password">
+						<input class="input100" type="password" name="pass" placeholder="Confirm Password" id="confirm-password">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
 					</div>
-					
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Create
-						</button>
-					</div>
-
-                    <div class="text-center p-t-12">
-						<a class="txt2" href="./index.html">
-							Login to your Account
-							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-						</a>
-					</div>
 				</form>
+
+				<div class="login100-form validate-form login-extra">
+				<div class="container-login100-form-btn">
+					<button class="login100-form-btn" id="signUp">
+						Create
+					</button>
+				</div>
+
+				<div class="text-center p-t-12">
+					<a class="txt2" href="./index.html">
+						Login to your Account
+						<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+					</a>
+				</div>
+				</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -91,8 +95,6 @@
 <!--===============================================================================================-->	
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <!--===============================================================================================-->
 	<script src="vendor/select2/select2.min.js"></script>
 <!--===============================================================================================-->
@@ -106,4 +108,64 @@
 	<script src="js/main.js"></script>
 
 </body>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
+    import { getDatabase,set,ref } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
+
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+		apiKey: "AIzaSyCaV19bjswbzhc9i8Qu7DwRbOJn8pEEzz0",
+    	authDomain: "proj-d-3b1c2.firebaseapp.com",
+    	projectId: "proj-d-3b1c2",
+    	storageBucket: "proj-d-3b1c2.appspot.com",
+    	messagingSenderId: "607417345536",
+    	appId: "1:607417345536:web:d9ca770bca0201da185ae5",
+    	measurementId: "${config.measurementId}"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+   
+
+    signUp.addEventListener('click',(e)=>
+
+    {
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+    var repassword = document.getElementById("confirm-password").value;
+    if(password!=repassword){
+        alert('Password and re-enter password should be same');
+        return;
+      }
+
+    createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    set(ref(database,'users/'+user.uid),{
+      username: name,
+      email:email
+
+    });
+    alert('user created');
+    location.replace("./index.html");
+    
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert(errorMessage);
+    // ..
+  });
+});
+  </script>
 </html>
