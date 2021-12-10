@@ -1,0 +1,19 @@
+.features{
+    background-color: #C9CCD5;
+    text-align: center;
+    padding: 100px;
+    height: 100vh;
+}
+
+.features>h2{
+    font-size: 4rem;
+    padding-left: 110px;
+}
+
+.features ul {
+    list-style-type: none;
+}
+
+.imgs {
+    border-radius: 20%;
+}
