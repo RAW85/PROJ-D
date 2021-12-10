@@ -74,6 +74,10 @@ body {
   }
 
   /* Content container */
+  main {
+    height: 100vh;
+  }
+
   .content-container {
     background-color: #C0C0C0;
     margin-left: 200px;

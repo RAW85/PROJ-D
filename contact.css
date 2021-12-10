@@ -1,0 +1,60 @@
+#main-div {
+    padding-top: 56px;
+    height: 100vh;
+    background-color: #5f5959;
+}
+
+.block {
+    text-align: center;
+    
+    background-color: #5f5959;
+    color: white;
+}
+.block > h1 {
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    margin: 0;
+    text-shadow: 3px 1px #1e61dd;
+}
+.block > div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#dp {
+    max-width: 20%;
+    box-shadow: 10px 10px #444141;
+}
+#aboutme {
+    max-width: 50%;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: x-large;
+}
+
+@media(max-width: 1231px) {
+    #aboutme {
+        font-size: large;
+    }
+}
+@media(max-width: 980px) {
+    #aboutme {
+        font-size: medium;
+    }
+}
+
+#form {
+    padding-bottom: 1rem;
+}
+#contact_email {
+    padding-left: 2rem;
+}
+.contact_message {
+    padding-top: 0;
+}
+#message_dibba {
+    height: 4rem;
+    margin-right: 2rem;
+}
