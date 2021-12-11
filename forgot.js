@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
 import { getDatabase,set,ref,update } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-database.js";
-import { getAuth, createUserWithEmailAndPassword ,signInWithEmailAndPassword ,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword ,signInWithEmailAndPassword ,onAuthStateChanged , sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,37 +23,22 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
-
-
-logIn.addEventListener('click',(e)=>
+$("#reset").click( function()
 {
 var email = document.getElementById("email").value;
-var password = document.getElementById("password").value;
-signInWithEmailAndPassword(auth, email, password)
-.then((userCredential) => {
-  // Signed in 
-  const user = userCredential.user;
-  const dt = new Date();
-  update(ref(database,'users/'+user.uid),{
-  last_login:dt
+sendPasswordResetEmail(auth, email)
+.then(function() {
+  
+alert("Password has been reset and sent to provided email");
+location.replace("./index.html");
 
 })
-location.replace("../home.html");
-/*
-if (user !== null) {
-  user.providerData.forEach((profile) => {
-    console.log("Sign-in provider: " + profile.providerId);
-    console.log("  Provider-specific UID: " + profile.uid);
-    console.log("  Name: " + profile.username);
-    console.log("  Email: " + profile.email);
-    console.log("  Photo URL: " + profile.photoURL);
-  });
-}*/
+.catch(function(error)  {
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  console.log(errorCode);
+  console.log(errorMessage);
 
-})
-.catch((error) => {
-  const errorCode = error.code;
-  const errorMessage = error.message;
   alert(errorMessage);
 })
 
